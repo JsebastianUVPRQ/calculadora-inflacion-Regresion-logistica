@@ -1,8 +1,20 @@
 import streamlit as st
-
 import pandas as pd
 
+# Cargar datos desde el archivo CSV local
+@st.cache_data
+def load_house_data():
+    try:
+        houses = pd.read_csv('dict_data.csv')
+        houses['fecha'] = houses['fecha'].astype(int)
+        houses['SalePrice'] = houses['SalePrice'].astype(int)
+        return houses
+    except FileNotFoundError:
+        st.error("Error: No se encontró el archivo 'dict_data.csv'. Asegúrate de que esté en la misma carpeta que esta aplicación.")
+        return pd.DataFrame()
 
+# Cargar los datos
+houses = load_house_data()
 
 COL = {
     1989: 26.82,
@@ -113,19 +125,22 @@ def main():
     
     st.title('Current value of a property')
     st.write('- This app uses DreamHouses dataset to show the current value of a property based on the year of purchase')
-    st.write('- We have 4124 real state properties. The prices are in USD')
-    st.write('Introduce the ID (0-4123) of the property you want to see the current value')
+    st.write('- We have real state properties. The prices are in USD')
     
-    id_house = st.number_input('Property ID', min_value=0, max_value=4123, value=0)
-    # use the DICTIONARY houses to get the value of the house
-    if st.button('Search'):
-        # keep in mind that the houses dataframe
-        id_house = int(id_house)
-        fecha = houses['fecha'][id_house]
-        monto = houses['SalePrice'][id_house]
-        result = calculate_value(fecha, 'USD', monto)
-        st.write(f'Property with ID: {id_house} was bought in {fecha} for {monto:.2f} USD')
-        st.write(f'The current value is {result:.2f} USD')
+    if not houses.empty:
+        st.write(f'Total properties available: {len(houses)}')
+        max_id = len(houses) - 1
+        id_house = st.number_input('Property ID', min_value=0, max_value=max_id, value=0)
+        
+        if st.button('Search'):
+            id_house = int(id_house)
+            fecha = houses.iloc[id_house]['fecha']
+            monto = houses.iloc[id_house]['SalePrice']
+            result = calculate_value(fecha, 'USD', monto)
+            st.write(f'Property with ID: {id_house} was bought in {fecha} for {monto:.2f} USD')
+            st.write(f'The current value is {result:.2f} USD')
+    else:
+        st.warning("No hay datos de propiedades disponibles. Asegúrate de que el archivo 'dict_data.csv' esté en la misma carpeta.")
 
 
 if __name__ == '__main__':
