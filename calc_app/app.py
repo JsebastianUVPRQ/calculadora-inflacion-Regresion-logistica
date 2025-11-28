@@ -137,8 +137,8 @@ def main():
             fecha = houses.iloc[id_house]['fecha']
             monto = houses.iloc[id_house]['SalePrice']
             result = calculate_value(fecha, 'USD', monto)
-            st.write(f'Property with ID: {id_house} was bought in {fecha} for {monto:.2f} USD')
-            st.write(f'The current value is {result:.2f} USD')
+            st.write(f'Property with ID: {id_house} was bought in {fecha} for {monto} USD')
+            st.write(f'The current value is {result} USD')
     else:
         st.warning("No hay datos de propiedades disponibles. Asegúrate de que el archivo 'dict_data.csv' esté en la misma carpeta.")
 
