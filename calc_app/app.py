@@ -117,7 +117,7 @@ def main():
     
     country = st.selectbox('Currency', ['USD', 'COP'])
     year = st.select_slider('Year', options=list(range(1989, 2024)))
-    amount = st.number_input('Amount', min_value=0.0, value=0.0, step=0.1)
+    amount = st.number_input('Amount', min_value=0, value=0)
     
     if st.button('Calculate'):
         result = calculate_value(year, country, amount)
