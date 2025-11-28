@@ -130,7 +130,7 @@ def main():
     if not houses.empty:
         st.write(f'Total properties available: {len(houses)}')
         max_id = len(houses) - 1
-        id_house = st.number_input('Property ID', min_value=0, max_value=max_id, value=0)
+        id_house = st.number_input('Property ID', min_value=0, max_value=max_id, value=2455, step=None)
         
         if st.button('Search'):
             id_house = int(id_house)
