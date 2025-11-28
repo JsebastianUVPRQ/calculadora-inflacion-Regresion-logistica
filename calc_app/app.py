@@ -2,16 +2,7 @@ import streamlit as st
 
 import pandas as pd
 
-# guarda el secreto en una variable 
 
-# archive = st.secrets["connections.gsheets"]
-'''
-Create a connection object.
-conn = st.connection("gsheets", type=GSheetsConnection)
-houses = conn.read(spreadsheet=None)
-houses['fecha'] = houses['fecha'].astype(int)
-houses['SalePrice'] = houses['SalePrice'].astype(int)
-'''
 
 COL = {
     1989: 26.82,
